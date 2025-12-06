@@ -62,7 +62,7 @@ export const Message = ({ role, parts }: { role: string; parts: UIMessage['parts
         return (
           <div key={getUniqueKey()} className="mb-4">
 
-            <span><b>{role === 'user' ? 'User: ' : 'AI: '}</b></span>
+            <span><b>{role === 'user' ? 'User: ' : 'fLogViewer AI Assistant: '}</b></span>
 
             {parts.map((part, i) => {
               switch (part.type) {

@@ -1,0 +1,165 @@
+<fLogViewer>
+<summary>
+    fLogViewer is a Windows program which allows one to visualize with color coded context, content of 
+    local text files or extracted text from different data sources provided by text-data-providers.
+    fLogViewer version 1 was created in 2000 by Frederic Torres, written in visual basic 6.
+    fLogViewer version 2 was created in 2008 by Frederic Torres, written in "C#".
+    In 2019, Frederic Torres resume the maintenance and added numerous features, including the text-data-providers.
+</summary>
+
+
+<!-- The content of the web page is used by the LLM openai/gpt-5.1 -->
+<website-url>https://www.flogviewer.com</website-url>
+
+<images>
+    <color-editor-dialog-image-url>https://www.flogviewer.com/images/color%20coding%20editor%2000.jpg</color-editor-dialog-image-url>
+</images>
+
+<text-data-providers>
+- Local Text file with extension .txt or .log or .csv or markdown.
+- Text returned from URL called with an HTTP GET, POST, PUT, DELETE.
+- Text based formatted table obtained running SELECT statment against a Microsoft SQL Server.
+- Text based formatted JSON obtained running SELECT statment against Azure Document DB.
+- Text based formatted table obtained running Kusto Queries against an Azure Application Insight instance.
+- Text based formatted table obtained running REDIS commands against REDIS database.
+- Text based formatted table obtained running SUMO query against a SUMO LOGIC.
+- Text based formatted file system table obtained running Windows file system command like 'dir'.
+- Text based formatted file system table obtained running Azure Storage command like 'list container' or 'list file'.
+</text-data-providers>
+
+<how-to-use-text-data-providers>
+# How to use a text data provider?    
+1. Create a ".txt" or ".sql" file.
+2. At the top of the file insert the connection string defining what is the text data provider type and 
+   how to connect to it.
+3. Use the specific commands to query text data from the text-data-provider.
+</how-to-use-text-data-providers>
+
+<query-examples>
+    <HTTP>
+        -- QA Http:
+        -- ^^^ Define the type of provider. Here it is just:  name Http:
+
+        contentType application/json
+        accept application/json
+
+        get http://api.zippopotam.us/us/01775
+
+        contentType multipart/form-data
+        body { "username":"user1","password":"pwd1" }
+        post https://www.brark.com/userSession
+        extract $TOKEN token -- extract the token from the response and assign it to the variable $TOKEN
+
+        set $TOKEN 59fd75c74a27ad35d000478f9f5bx0
+        headers authorization:Bearer $TOKEN
+        get https://www.brark.com/user/1234
+
+        contentType application/json
+        body { "username":"user1", "title": "The Man!" }
+        post https://www.brark.com/userSession
+        put https://www.brark.com/userSession
+        patch https://www.brark.com/userSession
+
+        delete https://www.brark.com/user/user1
+    </HTTP>
+
+    <Microsoft-SQL-Server>
+        -- ConnectionString: Server=.;Database=ContosoRetailDW;Trusted_Connection=True; 
+        -- ^^^ Define the type of provider. Name Type: Keys
+
+        -- Just display a text message
+        select 'Last 10 product updates'
+
+        -- display text of table DimProduct
+        select top 10 * from DimProduct order by UpdateDate desc
+    </Microsoft-SQL-Server>
+
+    <Azure-Document-DB>
+        -- fred-document-db-2 DocumentDB: https://xxxx-cosmos-2.documents.azure.com:443/ ABCDEFZTq4qAGNWEziAX4dLwwsZcjVsHKlhQZ83weHhD3CcrjQBeSYafHPh2KYmTLA==
+        -- ^^^ Define the type of provider. Name Type: Keys
+
+        use ToDoList Items
+
+        select COUNT(c) Count FROM c
+        SELECT * FROM c
+        SELECT * FROM c WHERE c.id = 'Andersen.1'
+
+        -- This select show how to format the modified date of the record
+        SELECT TimestampToDateTime(c._ts*1000) as LastModified, c as record FROM c WHERE c.TransactionId in (607600)
+    </Azure-Document-DB>
+
+    <REDIS>
+        -- QA-ENV Redis: myRedis.redis.cache.windows.net:6380 fNO0fHlTUzE= ssl=true
+        -- ^^^ Define the type of provider. Name Type: Keys
+
+         -- Query the REDIS database for a all key starting with a 'a'
+        keys a*
+        get 1234
+
+        -- How to create key
+        setString myName myValue
+        setList fList 1,2,3,4,5,6,7,8 30
+        setHash fuser:999 username=martina,firstName=Martina,lastName=Elisa,country=GB 30
+        setString fredis_debug_mode true 60
+        del fList
+    </REDIS>
+
+    <SUMO-LOGIC>
+        -- QA-ENV Sumo: Sumo ACCESS_ID ACCESS_KEY
+        -- ^^^ Define the type of provider. Name Type: Keys
+
+        -- Max row returned by resultset 
+        limit 1000 
+
+        -- List of columns to display
+        columns  _messagetime _collector _sourcecategory cs_uri_stem  cs_uri_query _raw
+
+        timespan 2023-06-09 2022-06-09 -- Start/end of day
+        timespan PT60M -- Past 60 minutes
+        timespan PT1H -- Past 1 hour
+
+        prequery (_sourceCategory=qa-environment*) 
+        query "services.accounting"
+
+        sortbymessagetime -- sortbyreceipttime
+
+        query | count _sourceCategory | sort by _count
+    </SUMO-LOGIC>
+
+    <Azure-Storage>
+        -- QA AzureStorage: AzureStorage
+        -- ^^^ Define the type of provider. Name Type: Keys
+        -- The Azure Storage Commands avaialable are : use, listContainer, dir path wildCard.
+
+        select ''
+        select ' A Z U R E   S T O R A G E: test0000flogviewer	`txt_hdr'
+        select ''
+        
+        -- Use the command 'use' to select a storage account.
+        use	test0000flogviewer	Iuerioeurwork8vdGxFz20
+        
+        maxContainer 132
+        
+        -- List all the containers in the storage account.
+        listContainer
+        
+        -- List the directories and files in a specific path.
+        dir /public/projects
+        dir /public/projects/MUSB_UsbDiskAsProgram
+        dir /public/projects/MUSB_UsbDiskAsProgram/Debug
+        
+        -- Use another storage account.
+        use mainStorage XisndnvyvndnsiXXisndnvyvndnsiX
+        dir /dashboard
+        -- List the directories and files in a specific path including wild card
+        dir /dashboard *.json
+    </Azure-Storage>
+</query-examples>
+
+<rules>
+- If the question is not related to the fLogViewer software or the current LLM model, say "I'm sorry, I can only answer questions about the the software fLogViewer."
+- Use quotes from the content of the website to answer the question.
+- Return code sample in markdown format, do not include the xml tag, do not include the html tag.
+- Use paragraphs in your output.
+</rules>
+<fLogViewer>

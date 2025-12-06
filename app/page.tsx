@@ -3,22 +3,33 @@
 'use client';
 
 import { useChat } from '@ai-sdk/react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Message, Wrapper } from './components';
 
 const placeHolder = "Ask me anything about fLogViewer";
-const defaultInput = "List all the text data providers";
+const defaultInput = "Show me how to query an Azure Storage account?";
 
 export default function Chat() {
 
   const [input, setInput] = useState(defaultInput);
   const { messages, sendMessage } = useChat();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <div className="flex flex-col h-screen w-full ml-2 mr-4">
       <div className="flex-1 overflow-y-auto w-full stretch p-4">
         {messages.map(message => (
           <Message key={message.id} role={message.role} parts={message.parts} />
         ))}
+        <div ref={messagesEndRef} />
       </div>
       <div className="w-full stretch p-4">
         <form onSubmit={e => { e.preventDefault(); sendMessage({ text: input }); setInput(''); }}>

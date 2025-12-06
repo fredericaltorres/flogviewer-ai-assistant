@@ -38,7 +38,7 @@
 <query-examples>
     <HTTP>
         -- QA Http:
-        -- ^^^ Define the type of provider. Here it is just:  name Http:
+        -- ^^^ Define the type of provider. Here it is just:  your-name Http:
 
         contentType application/json
         accept application/json
@@ -65,7 +65,7 @@
 
     <Microsoft-SQL-Server>
         -- ConnectionString: Server=.;Database=ContosoRetailDW;Trusted_Connection=True; 
-        -- ^^^ Define the type of provider. Name Type: Keys
+        -- ^^^ Define the type of provider. your-name Type: Keys
 
         -- Just display a text message
         select 'Last 10 product updates'
@@ -76,7 +76,7 @@
 
     <Azure-Document-DB>
         -- fred-document-db-2 DocumentDB: https://xxxx-cosmos-2.documents.azure.com:443/ ABCDEFZTq4qAGNWEziAX4dLwwsZcjVsHKlhQZ83weHhD3CcrjQBeSYafHPh2KYmTLA==
-        -- ^^^ Define the type of provider. Name Type: Keys
+        -- ^^^ Define the type of provider. your-name Type: Keys
 
         use ToDoList Items
 
@@ -90,10 +90,12 @@
 
     <REDIS>
         -- QA-ENV Redis: myRedis.redis.cache.windows.net:6380 fNO0fHlTUzE= ssl=true
-        -- ^^^ Define the type of provider. Name Type: Keys
+        -- ^^^ Define the type of provider. your-name Type: Keys
 
          -- Query the REDIS database for a all key starting with a 'a'
         keys a*
+
+        -- Query the REDIS database for a specific key
         get 1234
 
         -- How to create key
@@ -106,7 +108,7 @@
 
     <SUMO-LOGIC>
         -- QA-ENV Sumo: Sumo ACCESS_ID ACCESS_KEY
-        -- ^^^ Define the type of provider. Name Type: Keys
+        -- ^^^ Define the type of provider. your-name Type: Keys
 
         -- Max row returned by resultset 
         limit 1000 
@@ -128,17 +130,15 @@
 
     <Azure-Storage>
         -- QA AzureStorage: AzureStorage
-        -- ^^^ Define the type of provider. Name Type: Keys
-        -- The Azure Storage Commands avaialable are : use, listContainer, dir path wildCard.
+        -- ^^^ Define the type of provider. your-name Type: Type (no key for Azure Storage)
+        -- The Azure storage commands available are : use, listContainer, dir path wildCard.
 
         select ''
         select ' A Z U R E   S T O R A G E: test0000flogviewer	`txt_hdr'
         select ''
         
         -- Use the command 'use' to select a storage account.
-        use	test0000flogviewer	Iuerioeurwork8vdGxFz20
-        
-        maxContainer 132
+        use test0000flogviewer Iuerioeurwork8vdGxFz20
         
         -- List all the containers in the storage account.
         listContainer

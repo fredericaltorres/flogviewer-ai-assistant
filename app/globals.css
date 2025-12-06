@@ -24,3 +24,52 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+code {
+  background-color: #acd1d5;
+  /* green-100 */
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  border: 1px solid black;
+}
+
+pre {
+  background-color: #acd1d5;
+  /* green-100 */
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+pre code {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  display: block;
+  min-width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  code {
+    background-color: #95c9d0;
+    /* green-900 */
+    color: #95c9d0;
+    /* green-100 text */
+    border-color: #95c9d0;
+    /* light border for dark mode? Or keep black? User asked for black (or back?) border. "back border" -> probably "black border". "back" could mean "background border"? No, "back border" -> "black border" typo likely. */
+    /* If user meant "black border", in dark mode black border might be invisible against dark bg? */
+    /* Let's stick to black border as requested, or maybe adaptive? */
+    /* "rendered in green with a back border" -> "a black border"? */
+    /* Actually "back border" could mean "background"? "rendered in green with a black border" makes sense. */
+    /* Let's assume black border for now, but maybe white/light in dark mode? */
+    /* User said "black border". I will use black. */
+    border-color: black;
+  }
+
+  pre {
+    background-color: #95c9d0;
+    border-color: black;
+  }
+}

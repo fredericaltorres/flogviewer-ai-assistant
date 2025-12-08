@@ -15,6 +15,8 @@ What is the fLogViewer's keyboard shortcut to open a HTTP command file?
 What is the fLogViewer's keyboard shortcut to open a Microsoft-SQL-Server command file?
 What is the fLogViewer's keyboard shortcut to open a REDIS command file?
 
+Does fLogViewewr offer to configure the color used to display a text line from a text file?
+
 Does fLogViewewr offer an auto archive text file before I request clearing the text log file?
 How do you know about the auto archive feature, no information was provided in the system prompt.
 
